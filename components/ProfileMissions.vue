@@ -1,6 +1,11 @@
 <template>
   <v-card class="profile-missions">
-    <v-card-title class="text-center">Missions</v-card-title>
+    <v-toolbar color="transparent">
+    <v-toolbar-title class="text-h6" text="Missions"></v-toolbar-title>
+    <template v-slot:append>
+      <AddMissionDialog :show="dialogVisible" @close="closeDialog" @save="addMission" />
+        </template>
+    </v-toolbar>
     <v-list>
       <v-list-item-group v-model="expandedMission" active-class="open">
         <v-list-item v-for="(mission, index) in missions" :key="index">
@@ -56,6 +61,16 @@
 import { ref } from 'vue';
 import { defineProps } from 'vue';
 
+const dialogVisible = ref(false);
+
+const openDialog = () => {
+  dialogVisible.value = true;
+};
+
+const closeDialog = () => {
+  dialogVisible.value = false;
+};
+
 interface HardSkill {
   name: string;
   level: string;
@@ -94,7 +109,7 @@ const closeEditModal = () => {
 const updateMission = async (index: number, updatedMission: Mission) => {
   props.missions.splice(index, 1, updatedMission);
   try {
-      const { error } = await supabase.from('profil').update([
+    const { error } = await supabase.from('profil').update([
         { mission:  props.missions },
       ]).eq('id', props.profilId).select();
       if (error) throw error;
@@ -102,6 +117,19 @@ const updateMission = async (index: number, updatedMission: Mission) => {
       alert('Une erreur est survenue: ' + error);
     }
   closeEditModal();
+};
+
+const addMission = async (mission: Mission) => {
+  console.log('Nouvelle mission ajoutée :', mission);
+  props.missions.push(mission);
+  try {
+  const { error } = await supabase.from('profil').update([
+        { mission:  props.missions },
+      ]).eq('id', props.profilId).select();
+      if (error) throw error;
+    } catch (error) {
+      alert('Une erreur est survenue: ' + error);
+    }
 };
 
 const deleteMission = async (index: number) => {
