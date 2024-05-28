@@ -43,9 +43,12 @@
   
   onMounted(async () => {
     const { data } = await supabase.auth.getSession();
+    if (! data.session) {
+      return navigateTo('/')
+    }
     user.value = data.session.user;
     try{
-        let { data, error } = await supabase.from('profil').select('*').eq('user_id', user.value.id)
+        let { data } = await supabase.from('profil').select('*').eq('user_id', user.value.id)
         if(data){
             profil.value = data[0]
         }else{

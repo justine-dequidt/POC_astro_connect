@@ -7,9 +7,7 @@
 <script setup lang="ts">
 import { supabase } from '../utils/supabase'
 const config = useRuntimeConfig()
-definePageMeta({
-    middleware: ['auth'],
-  });
+
 const url = config.public.environnement === 'local' ?  `http://localhost:3000/profil` : `https://main--poc-astro-connect.netlify.app/profil`
 
 supabase.auth.signInWithOAuth({
