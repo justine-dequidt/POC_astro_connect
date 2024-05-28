@@ -3,8 +3,9 @@
     <v-toolbar color="transparent">
     <v-toolbar-title class="text-h6" text="Missions"></v-toolbar-title>
     <template v-slot:append>
+      <v-btn @click="openDialog">Ajouter une Mission</v-btn>
       <AddMissionDialog :show="dialogVisible" @close="closeDialog" @save="addMission" />
-        </template>
+    </template>
     </v-toolbar>
     <v-list>
       <v-list-item-group v-model="expandedMission" active-class="open">
