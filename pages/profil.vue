@@ -5,7 +5,7 @@
           <ProfileHeader :user="user.user_metadata" />
         </v-col>
         <v-col cols="12" md="8">
-          <ProfileInfo :user="userInfo" />
+          <ProfileInfo :profilId="profil.id" :user="userInfo" />
         </v-col>
       </v-row>
       <v-row>
@@ -19,7 +19,7 @@
           <ProfileEducation :user="user" :profilId="profil.id" :degrees="profil.diploma" />
         </v-col>
       </v-row>
-      <ProfileMissions :missions="profil.mission" />
+      <ProfileMissions :profilId="profil.id" :missions="profil.mission" />
     </v-container>
   </template>
   
@@ -60,7 +60,6 @@
       experience: profil.value.xp,
       company: "Grow Your Business"
     };
-    profil.value.mission = JSON.parse(profil.value.mission)
   });
   </script>
   
