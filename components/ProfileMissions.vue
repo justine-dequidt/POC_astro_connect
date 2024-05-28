@@ -2,10 +2,7 @@
   <v-card class="profile-missions">
     <v-toolbar color="transparent">
     <v-toolbar-title class="text-h6" text="Missions"></v-toolbar-title>
-    <template v-slot:append>
-      <v-btn @click="openDialog">Ajouter une Mission</v-btn>
       <AddMissionDialog :show="dialogVisible" @close="closeDialog" @save="addMission" />
-    </template>
     </v-toolbar>
     <v-list>
       <v-list-item-group v-model="expandedMission" active-class="open">
@@ -124,13 +121,13 @@ const addMission = async (mission: Mission) => {
   console.log('Nouvelle mission ajoutée :', mission);
   props.missions.push(mission);
   try {
-  const { error } = await supabase.from('profil').update([
+    const { error } = await supabase.from('profil').update([
         { mission:  props.missions },
       ]).eq('id', props.profilId).select();
       if (error) throw error;
-    } catch (error) {
-      alert('Une erreur est survenue: ' + error);
-    }
+  } catch (error) {
+    alert('Une erreur est survenue: ' + error);
+  }
 };
 
 const deleteMission = async (index: number) => {

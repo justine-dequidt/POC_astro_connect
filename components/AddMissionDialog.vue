@@ -1,9 +1,11 @@
 <template>
     <v-dialog v-model="dialog" max-width="600px">
+    <template v-slot:activator="{ props: attrs }">
+        <v-btn variant="outlined" v-bind="attrs" >
+           Ajouter une Mission
+        </v-btn>
+      </template>
       <v-card>
-        <v-card-title>
-          <span class="headline">Ajouter une Mission</span>
-        </v-card-title>
         <v-card-text>
           <v-form @submit.prevent="save">
             <v-text-field v-model="localMission.clientName" label="Nom du Client" required></v-text-field>
