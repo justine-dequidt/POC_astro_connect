@@ -46,7 +46,7 @@
     user.value = data.session.user;
     try{
         let { data } = await supabase.from('profil').select('*').eq('user_id', user.value.id)
-        if(data){
+        if(data[0]){
             profil.value = data[0]
         }else{
             const { data, error } = await supabase.from('profil').insert([
