@@ -1,6 +1,6 @@
 <template>
-<v-btn>
-  Button
+<v-btn @click="test">
+  se connecter avec google 
 </v-btn>
 </template>
 
@@ -10,7 +10,9 @@ const config = useRuntimeConfig()
 
 const url = config.public.environnement === 'local' ?  `http://localhost:3000/profil` : `https://main--poc-astro-connect.netlify.app/profil`
 
-supabase.auth.signInWithOAuth({
+
+const test = () => {
+  supabase.auth.signInWithOAuth({
   provider: 'google',
   options: {
     redirectTo: url,
@@ -20,6 +22,8 @@ supabase.auth.signInWithOAuth({
     },
   },
 })
+}
+
 
 
 </script>
