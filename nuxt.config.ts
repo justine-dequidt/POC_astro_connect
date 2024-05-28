@@ -27,7 +27,8 @@ export default defineNuxtConfig({
     secret: process.env.SECRET,
     public: {
       supabaseUrl: process.env.VITE_SUPABASE_URL,
-      supabaseKey: process.env.VITE_SUPABASE_KEY
+      supabaseKey: process.env.VITE_SUPABASE_KEY,
+      environnement: process.env.VITE_ENVIRONNEMENT
     }
   }
 })

@@ -26,7 +26,8 @@
   <script setup lang="ts">
   import { ref, onMounted } from 'vue';
   import { supabase } from '../utils/supabase';
-  
+
+
   import ProfileHeader from '@/components/ProfileHeader.vue';
   import ProfileInfo from '@/components/ProfileInfo.vue';
   import ProfileSkills from '@/components/ProfileSkills.vue';
