@@ -30,5 +30,8 @@ export default defineNuxtConfig({
       supabaseKey: process.env.VITE_SUPABASE_KEY,
       environnement: process.env.VITE_ENVIRONNEMENT
     }
+  },
+  router: {
+    middleware: ['auth']
   }
 })
