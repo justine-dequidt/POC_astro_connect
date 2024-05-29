@@ -22,7 +22,7 @@
           <ProfilLangue :user="user" :profilId="profil.id" :degrees="profil.langue" />
         </v-col>
       </v-row>
-      <ProfileMissions :profilId="profil.id" :missions="profil.mission" />
+      <ProfileMissions :profilId="profil.id" :missions="profil.mission" :hard-skills="profil.hardSkill" />
     </v-container>
   </template>
   
@@ -63,7 +63,7 @@ import type { HardSkill } from '~/interfaces/hardSkill';
     }catch(error){
         alert("Une erreur est survenue" + error)
     }
-    profil.value.hardSkill = extractUniqueTechnos(profil.value.mission)
+    //profil.value.hardSkill = extractUniqueTechnos(profil.value.mission)
     userInfo.value = {
       title: profil.value.title,
       startDate: profil.value.startDate,

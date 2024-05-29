@@ -41,7 +41,6 @@
               <v-col cols="5">
                 <v-text-field label="Ajouter une technologie" v-model="newTech.name" required></v-text-field>
               </v-col>
-                <!-- <v-text-field label="Niveau" v-model="newTech.level" required></v-text-field> -->
               <v-col cols="2">
                 <v-btn icon @click="addTech">
                   <v-icon>mdi-plus</v-icon>

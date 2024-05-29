@@ -20,7 +20,17 @@
                     v-model="newSkill.level"
                     active-color="blue"
                     color="orange lighten-1"
-                ></v-rating>
+                    length="3"
+                    :item-labels="['Junior', 'Confirmé', 'Expert']"
+                >
+                <template v-slot:item-label="props">
+                    <span
+                        class="font-weight-black text-caption"
+                    >
+                    {{ props.label }}
+                    </span>
+                </template>
+            </v-rating>
               </v-col>
               <v-col cols="12" class="text-right">
                 <v-btn color="primary" @click="addSkill">Ajouter / modifier</v-btn>
@@ -54,7 +64,6 @@
   
 <script setup lang="ts">
 import { ref, defineProps, defineEmits } from 'vue';
-import StarRating from './StarRating.vue';
 
 const props = defineProps({
   skills: {

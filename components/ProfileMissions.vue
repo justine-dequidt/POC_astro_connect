@@ -87,7 +87,7 @@ interface Mission {
   technos: Array<HardSkill>;
 }
 
-const props = defineProps<{ missions: Mission[], profilId: string }>();
+const props = defineProps<{ missions: Mission[], profilId: string, hardSkills: HardSkill }>();
 
 const expandedMission = ref<number | null>(null);
 const selectedMissionIndex = ref<number | null>(null);
@@ -104,18 +104,29 @@ const closeEditModal = () => {
   selectedMissionIndex.value = null;
 };
 
+const mergeTechnos = (baseTechnos: { name: string; level: string }[], updatedTechnos: { name: string; level: string }[]) => {
+        const existingTechnoNames = new Set(baseTechnos.map(techno => techno.name));
+        const newTechnos = updatedTechnos.filter(techno => !existingTechnoNames.has(techno.name));
+        return [...baseTechnos, ...newTechnos];
+    };
+
 const updateMission = async (index: number, updatedMission: Mission) => {
-  props.missions.splice(index, 1, updatedMission);
-  try {
-    const { error } = await supabase.from('profil').update([
-        { mission:  props.missions },
-      ]).eq('id', props.profilId).select();
-      if (error) throw error;
+       
+    const skills = mergeTechnos(props.hardSkills, updatedMission.technos);
+
+    console.log(skills, updatedMission.technos)
+    try {
+        const { error } = await supabase.from('profil').update([
+            { mission: props.missions, hardSkill: skills },
+        ]).eq('id', props.profilId).select();
+        if (error) throw error;
     } catch (error) {
-      alert('Une erreur est survenue: ' + error);
+        alert('Une erreur est survenue: ' + error);
     }
-  closeEditModal();
+
+    closeEditModal();
 };
+
 
 const addMission = async (mission: Mission) => {
   props.missions.push(mission);
