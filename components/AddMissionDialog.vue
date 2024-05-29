@@ -108,11 +108,6 @@
     dialog.value = false;
     emit('close');
   };
-  
-  const handleRatingChange = (newRating) =>{
-    localMission.value.currentRating = newRating;
-      console.log('Selected Rating:', newRating); // Vous pouvez enregistrer cette valeur en BDD
-    }
 
   const save = () => {
     emit('save', localMission.value);
@@ -132,8 +127,9 @@
   
   const addTech = () => {
     if (newTech.value.name.trim()) {
+      newTech.value.level = 1
       localMission.value.technos.push({ ...newTech.value });
-      newTech.value = { name: ''};
+      newTech.value = { name: '', level: ''};
     }
   };
   
