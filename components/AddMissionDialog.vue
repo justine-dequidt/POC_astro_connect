@@ -41,9 +41,7 @@
               <v-col cols="5">
                 <v-text-field label="Ajouter une technologie" v-model="newTech.name" required></v-text-field>
               </v-col>
-              <v-col cols="5">
-                <v-text-field label="Niveau" v-model="newTech.level" required></v-text-field>
-              </v-col>
+                <!-- <v-text-field label="Niveau" v-model="newTech.level" required></v-text-field> -->
               <v-col cols="2">
                 <v-btn icon @click="addTech">
                   <v-icon>mdi-plus</v-icon>
@@ -52,7 +50,7 @@
             </v-row>
             <ul class="items-list">
               <li v-for="(tech, index) in localMission.technos" :key="index" class="items-list-item">
-                <span>{{ tech.name }} ({{ tech.level }})</span>
+                <span>{{ tech.name }}</span>
                 <v-btn icon @click="removeTech(index)">
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
@@ -73,7 +71,6 @@
   
   interface HardSkill {
     name: string;
-    level: string;
   }
   
   interface Mission {
@@ -106,13 +103,18 @@
     technos: []
   });
   const newTask = ref('');
-  const newTech = ref<HardSkill>({ name: '', level: '' });
+  const newTech = ref<HardSkill>({ name: ''});
   
   const close = () => {
     dialog.value = false;
     emit('close');
   };
   
+  const handleRatingChange = (newRating) =>{
+    localMission.value.currentRating = newRating;
+      console.log('Selected Rating:', newRating); // Vous pouvez enregistrer cette valeur en BDD
+    }
+
   const save = () => {
     emit('save', localMission.value);
     close();
@@ -130,9 +132,9 @@
   };
   
   const addTech = () => {
-    if (newTech.value.name.trim() && newTech.value.level.trim()) {
+    if (newTech.value.name.trim()) {
       localMission.value.technos.push({ ...newTech.value });
-      newTech.value = { name: '', level: '' };
+      newTech.value = { name: ''};
     }
   };
   

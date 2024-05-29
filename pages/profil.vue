@@ -40,6 +40,7 @@
   import ProfileEducation from '@/components/ProfileEducation.vue';
   import ProfileMissions from '@/components/ProfileMissions.vue';
   import type { Profil } from '~/interfaces/profil';
+import type { HardSkill } from '~/interfaces/hardSkill';
   
   const user = ref<Profil>(null);
   const userInfo = ref(null);
@@ -70,10 +71,9 @@
     };
   });
 
-  function extractUniqueTechnos(missions: Mission[]): Techno[] {
-    console.log(missions, 'missions')
+  function extractUniqueTechnos(missions: Profil[]): HardSkill[] {
     const technoSet: Set<string> = new Set();
-    const uniqueTechnos: Techno[] = [];
+    const uniqueTechnos: HardSkill[] = [];
 
     missions.forEach(mission => {
       mission.technos.forEach(techno => {
@@ -84,7 +84,6 @@
         }
       });
     });
-    console.log(uniqueTechnos, 'uniqueTechnos')
     return uniqueTechnos;
   }
   </script>
