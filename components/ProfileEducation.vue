@@ -13,7 +13,7 @@
       </v-toolbar>
       <v-list>
         <v-list-item v-for="degree in degrees" :key="degree">
-          <v-list-item-content>{{ degree }}</v-list-item-content>
+          <v-list-item-content>{{ degree.name }} - {{ degree.year }} </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-card>

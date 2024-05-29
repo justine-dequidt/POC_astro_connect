@@ -18,6 +18,9 @@
             <v-col cols="5" v-if="inputPlaceholder === 'langue'">
               <v-text-field label="niveau" v-model="level" required></v-text-field>
             </v-col>
+            <v-col cols="5" v-if="inputPlaceholder === 'diplôme'">
+              <v-text-field label="year" v-model="year" required></v-text-field>
+            </v-col>
             <v-col cols="2">
               <v-btn icon @click="addItem">
                 <v-icon>mdi-plus</v-icon>
@@ -27,6 +30,7 @@
           <ul class="items-list">
             <li v-for="(item, index) in items" :key="index" class="items-list-item">
               <span v-if="inputPlaceholder === 'langue'">{{ item.name }} - ({{ item.level }})</span>
+              <span v-else-if="inputPlaceholder === 'diplôme'">{{ item.name }} - ({{ item.year }})</span>
               <span v-else>{{ item }}</span>
               <v-btn icon @click="removeItem(index)">
                 <v-icon>mdi-delete</v-icon>
@@ -47,6 +51,7 @@
 <script setup lang="ts">
 import { ref, defineProps, defineEmits } from 'vue';
 const level = ref(null)
+const year = ref(null)
 const props = defineProps({
   title: {
     type: String,
@@ -72,11 +77,14 @@ const addItem = () => {
   if (newItem.value.trim()) {
     if(props.inputPlaceholder === 'langue'){
       items.value.push({"name": newItem.value,"level": level.value})
+    }else if(props.inputPlaceholder === 'diplôme'){
+      items.value.push({"name": newItem.value,"year": year.value})
     }else{
       items.value.push(newItem.value.trim());
     }
     newItem.value = '';
     level.value = '';
+    year.value = '';
   }
 };
 
