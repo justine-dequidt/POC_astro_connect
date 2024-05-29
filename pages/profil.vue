@@ -9,7 +9,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="3">
           <ProfileSkills :user="user" :profilId="profil.id" :skills="profil.hardSkill" />
         </v-col>
         <v-col cols="12" md="3">
@@ -17,6 +17,9 @@
         </v-col>
         <v-col cols="12" md="3">
           <ProfileEducation :user="user" :profilId="profil.id" :degrees="profil.diploma" />
+        </v-col>
+        <v-col cols="12" md="3">
+          <ProfilLangue :user="user" :profilId="profil.id" :degrees="profil.langue" />
         </v-col>
       </v-row>
       <ProfileMissions :profilId="profil.id" :missions="profil.mission" />
@@ -36,10 +39,11 @@
   import ProfileSoftSkills from '@/components/ProfileSoftSkills.vue';
   import ProfileEducation from '@/components/ProfileEducation.vue';
   import ProfileMissions from '@/components/ProfileMissions.vue';
+  import type { Profil } from '~/interfaces/profil';
   
-  const user = ref(null);
+  const user = ref<Profil>(null);
   const userInfo = ref(null);
-  const profil = ref(null);
+  const profil = ref<Profil>(null);
   
   onMounted(async () => {
     const { data } = await supabase.auth.getSession();
@@ -58,12 +62,31 @@
     }catch(error){
         alert("Une erreur est survenue" + error)
     }
+    profil.value.hardSkill = extractUniqueTechnos(profil.value.mission)
     userInfo.value = {
       title: profil.value.title,
-      experience: profil.value.xp,
+      startDate: profil.value.startDate,
       company: "Grow Your Business"
     };
   });
+
+  function extractUniqueTechnos(missions: Mission[]): Techno[] {
+    console.log(missions, 'missions')
+    const technoSet: Set<string> = new Set();
+    const uniqueTechnos: Techno[] = [];
+
+    missions.forEach(mission => {
+      mission.technos.forEach(techno => {
+        const techIdentifier = `${techno.name}-${techno.level}`;
+        if (!technoSet.has(techIdentifier)) {
+          technoSet.add(techIdentifier);
+          uniqueTechnos.push(techno);
+        }
+      });
+    });
+    console.log(uniqueTechnos, 'uniqueTechnos')
+    return uniqueTechnos;
+  }
   </script>
   
   <style scoped>

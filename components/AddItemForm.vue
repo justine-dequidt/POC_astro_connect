@@ -12,8 +12,11 @@
       <v-card-text>
         <v-form ref="form" @submit.prevent="addItem">
           <v-row>
-            <v-col cols="10">
+            <v-col cols="5">
               <v-text-field :label="inputPlaceholder" v-model="newItem" required></v-text-field>
+            </v-col>
+            <v-col cols="5" v-if="inputPlaceholder === 'langue'">
+              <v-text-field label="niveau" v-model="level" required></v-text-field>
             </v-col>
             <v-col cols="2">
               <v-btn icon @click="addItem">
@@ -23,7 +26,8 @@
           </v-row>
           <ul class="items-list">
             <li v-for="(item, index) in items" :key="index" class="items-list-item">
-              <span>{{ item }}</span>
+              <span v-if="inputPlaceholder === 'langue'">{{ item.name }} - ({{ item.level }})</span>
+              <span v-else>{{ item }}</span>
               <v-btn icon @click="removeItem(index)">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
@@ -42,7 +46,7 @@
 
 <script setup lang="ts">
 import { ref, defineProps, defineEmits } from 'vue';
-
+const level = ref(null)
 const props = defineProps({
   title: {
     type: String,
@@ -66,8 +70,13 @@ const items = ref<string[]>(props.items);
 
 const addItem = () => {
   if (newItem.value.trim()) {
-    items.value.push(newItem.value.trim());
+    if(props.inputPlaceholder === 'langue'){
+      items.value.push({"name": newItem.value,"level": level.value})
+    }else{
+      items.value.push(newItem.value.trim());
+    }
     newItem.value = '';
+    level.value = '';
   }
 };
 

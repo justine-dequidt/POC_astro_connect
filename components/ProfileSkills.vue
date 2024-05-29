@@ -3,7 +3,7 @@
       <v-card-title class="text-center">Compétences</v-card-title>
       <v-list>
         <v-list-item v-for="skill in skills" :key="skill">
-          <v-list-item-content>{{ skill }}</v-list-item-content>
+          <v-list-item-content>{{ skill.name }} - ({{ skill.level }})</v-list-item-content>
         </v-list-item>
       </v-list>
     </v-card>

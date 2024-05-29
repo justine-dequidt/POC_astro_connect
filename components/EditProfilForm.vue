@@ -7,13 +7,16 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">{{ title }}</span>
+          <span class="headline">{{ title }} </span>
         </v-card-title>
         <v-card-text>
           <v-form ref="form" @submit.prevent="saveProfilTitle">
             <v-row>
-              <v-col cols="10">
+              <v-col cols="12">
                 <v-text-field :label="inputPlaceholder" v-model="localProfilTitle" required></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-date-input label="Date de début" v-model="stratDate" required></v-date-input>
               </v-col>
             </v-row>
           </v-form>
@@ -43,19 +46,28 @@
       type: String,
       required: true,
     },
+    date: {
+      type: String,
+      required: true,
+    },
   });
   
   const emit = defineEmits(['save']);
   
   const dialog = ref(false);
   const localProfilTitle = ref(props.profilTitle);
+  const stratDate = ref(props.date)
   
   watch(() => props.profilTitle, (newVal) => {
     localProfilTitle.value = newVal;
   });
   
   const saveProfilTitle = () => {
-    emit('save', localProfilTitle.value);
+    const profilInfo = {
+      job: localProfilTitle.value,
+      startDate: stratDate.value
+    }
+    emit('save', profilInfo);
     dialog.value = false;
   };
   </script>

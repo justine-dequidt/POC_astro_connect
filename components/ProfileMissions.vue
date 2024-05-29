@@ -118,7 +118,6 @@ const updateMission = async (index: number, updatedMission: Mission) => {
 };
 
 const addMission = async (mission: Mission) => {
-  console.log('Nouvelle mission ajoutée :', mission);
   props.missions.push(mission);
   try {
     const { error } = await supabase.from('profil').update([
