@@ -120,7 +120,6 @@ const updateMission = async (index: number, updatedMission: Mission) => {
 
 
 const addMission = async (mission: Mission) => {
-  console.log(mission, 'mission')
   props.missions.push(mission);
   try {
     const { error } = await supabase.from('profil').update([

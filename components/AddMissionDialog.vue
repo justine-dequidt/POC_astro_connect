@@ -122,7 +122,6 @@ const save = () => {
 };
 
 const addTask = () => {
-  console.log(localMission.value, 'localMission.value.task')
   if (newTask.value.trim()) {
     localMission.value.task.push(newTask.value.trim());
     newTask.value = '';

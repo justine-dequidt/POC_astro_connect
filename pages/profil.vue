@@ -40,7 +40,6 @@
   import ProfileEducation from '@/components/ProfileEducation.vue';
   import ProfileMissions from '@/components/ProfileMissions.vue';
   import type { Profil } from '~/interfaces/profil';
-import type { HardSkill } from '~/interfaces/hardSkill';
   
   const user = ref<Profil>(null);
   const userInfo = ref(null);
@@ -69,7 +68,6 @@ import type { HardSkill } from '~/interfaces/hardSkill';
       startDate: profil.value.startDate,
       company: "Grow Your Business"
     };
-    console.log(userInfo.value, 'userInfo')
   });
 
   </script>
