@@ -16,7 +16,7 @@
               <v-text-field :label="inputPlaceholder" v-model="newItem" required></v-text-field>
             </v-col>
             <v-col cols="5" v-if="inputPlaceholder === 'langue'">
-              <v-text-field label="niveau" v-model="level" required></v-text-field>
+              <v-select label="niveau" v-model="level" required  :items="['A1', 'A2', 'B1', 'B2', 'C1', 'C2']"></v-select>
             </v-col>
             <v-col cols="5" v-if="inputPlaceholder === 'diplôme'">
               <v-text-field label="year" v-model="year" required></v-text-field>

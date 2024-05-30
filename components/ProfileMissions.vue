@@ -111,10 +111,8 @@ const mergeTechnos = (baseTechnos: { name: string; level: string }[], updatedTec
     };
 
 const updateMission = async (index: number, updatedMission: Mission) => {
-       
     const skills = mergeTechnos(props.hardSkills, updatedMission.technos);
 
-    console.log(skills, updatedMission.technos)
     try {
         const { error } = await supabase.from('profil').update([
             { mission: props.missions, hardSkill: skills },
