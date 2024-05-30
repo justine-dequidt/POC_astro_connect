@@ -13,6 +13,9 @@
           <v-form ref="form" @submit.prevent="saveProfilTitle">
             <v-row>
               <v-col cols="12">
+                <v-text-field label="Phrase d'introduction profile" v-model="profilText" required></v-text-field>
+              </v-col>
+              <v-col cols="12">
                 <v-text-field :label="inputPlaceholder" v-model="localProfilTitle" required></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -50,6 +53,10 @@
       type: String,
       required: true,
     },
+    profilText: {
+      type: String,
+      required: true,
+    },
   });
   
   const emit = defineEmits(['save']);
@@ -57,6 +64,8 @@
   const dialog = ref(false);
   const localProfilTitle = ref(props.profilTitle);
   const stratDate = ref(props.date)
+  const profilText = ref(props.profilText)
+
   
   watch(() => props.profilTitle, (newVal) => {
     localProfilTitle.value = newVal;
@@ -65,7 +74,8 @@
   const saveProfilTitle = () => {
     const profilInfo = {
       job: localProfilTitle.value,
-      startDate: stratDate.value
+      startDate: stratDate.value,
+      profilText: profilText.value
     }
     emit('save', profilInfo);
     dialog.value = false;

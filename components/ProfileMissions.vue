@@ -58,6 +58,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { defineProps } from 'vue';
+import type { HardSkill } from '~/interfaces/hardSkill';
+import type { Mission } from '~/interfaces/mission';
 
 const dialogVisible = ref(false);
 
@@ -69,23 +71,6 @@ const closeDialog = () => {
   dialogVisible.value = false;
 };
 
-interface HardSkill {
-  name: string;
-  level: string;
-}
-
-interface Mission {
-  id: number;
-  clientName: string;
-  sector: string;
-  stratDate: string;
-  endDate: string;
-  duration: string;
-  inProgress: boolean;
-  context: string;
-  task: Array<string>;
-  technos: Array<HardSkill>;
-}
 
 const props = defineProps<{ missions: Mission[], profilId: string, hardSkills: HardSkill }>();
 

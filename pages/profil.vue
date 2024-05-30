@@ -63,29 +63,15 @@ import type { HardSkill } from '~/interfaces/hardSkill';
     }catch(error){
         alert("Une erreur est survenue" + error)
     }
-    //profil.value.hardSkill = extractUniqueTechnos(profil.value.mission)
     userInfo.value = {
       title: profil.value.title,
+      profilText: profil.value.profilText,
       startDate: profil.value.startDate,
       company: "Grow Your Business"
     };
+    console.log(userInfo.value, 'userInfo')
   });
 
-  function extractUniqueTechnos(missions: Profil[]): HardSkill[] {
-    const technoSet: Set<string> = new Set();
-    const uniqueTechnos: HardSkill[] = [];
-
-    missions.forEach(mission => {
-      mission.technos.forEach(techno => {
-        const techIdentifier = `${techno.name}-${techno.level}`;
-        if (!technoSet.has(techIdentifier)) {
-          technoSet.add(techIdentifier);
-          uniqueTechnos.push(techno);
-        }
-      });
-    });
-    return uniqueTechnos;
-  }
   </script>
   
   <style scoped>

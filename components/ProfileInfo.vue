@@ -8,12 +8,16 @@
           inputPlaceholder="Métier"
           :profilTitle="user.title"
           :date="user.stratDate"
+          :profilText="user.profilText"
           @save="handleSaveProfil"
         />
       </template>
     </v-toolbar>
     <v-card-subtitle>{{ user.title }}</v-card-subtitle>
     <v-list>
+      <v-list-item>
+        <v-list-item-content>{{ user.profilText }} </v-list-item-content>
+      </v-list-item>
       <v-list-item>
         <v-list-item-content>Expérience : {{ experience }} ans</v-list-item-content>
       </v-list-item>
@@ -59,12 +63,17 @@ const handleSaveProfil = async (profil: object) => {
   try {
     const { error } = await supabase
       .from('profil')
-      .update({ startDate: profil.startDate, title: profil.job })
+      .update({ startDate: profil.startDate, title: profil.job, profilText: profil.profilText })
       .eq('id', props.profilId)
       .select();
     if (error) throw error;
+    if(profil.startDate){
+      experience.value = calculateYearsDifference(profil.startDate)
+    }else{
+      experience.value = calculateYearsDifference(props.user.startDate)
+    }
     props.user.title = profil.job;
-    experience.value = calculateYearsDifference(profil.startDate)
+    props.user.profilText = profil.profilText;
   } catch (error) {
     alert('Une erreur est survenue: ' + error.message);
   }
