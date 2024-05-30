@@ -1,6 +1,7 @@
 import type { HardSkill } from "./hardSkill";
 
 export interface Mission {
+    title: string;
     clientName:string;
     sector: string;
     stratDate: string;

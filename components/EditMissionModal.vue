@@ -8,7 +8,7 @@
         <v-form @submit.prevent="save">
           <v-text-field v-model="localMission.clientName" label="Nom du Client" required></v-text-field>
           <v-text-field v-model="localMission.sector" label="Secteur" required></v-text-field>
-
+          <v-text-field v-model="localMission.title" label="Titre de la mission" required></v-text-field>
           <v-text-field
             v-model="localMission.stratDate"
             label="Date de Début (JJ/MM/YYYY)"

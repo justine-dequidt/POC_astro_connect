@@ -2,7 +2,8 @@
   <v-card class="profile-missions">
     <v-toolbar color="transparent">
     <v-toolbar-title class="text-h6" text="Missions"></v-toolbar-title>
-      <AddMissionDialog :show="dialogVisible" @close="closeDialog" @save="addMission" />
+    <v-btn @click="openDialog">Ajouter une mission</v-btn>
+      <AddMissionDialog v-if="dialogVisible" @close="closeDialog" @save="addMission" />
     </v-toolbar>
     <v-list>
       <v-list-item-group v-model="expandedMission" active-class="open">
@@ -26,16 +27,23 @@
             </v-row>
             <v-expand-transition>
               <div v-show="expandedMission === index" class="mission-details">
+                <p><strong> {{ mission.title }} </strong></p>
+                <br>
                 <p><strong>Contexte:</strong> {{ mission.context }}</p>
+                <br>
                 <p><strong>Tâches:</strong></p>
+                <br>
                 <ul>
                   <li v-for="task in mission.task" :key="task">{{ task }}</li>
                 </ul>
                 <p><strong>Technologies:</strong></p>
+                <br>
                 <ul>
                   <li v-for="tech in mission.technos" :key="tech.name">{{ tech.name }} ({{ tech.level }})</li>
                 </ul>
+                <br>
                 <p><strong>Durée:</strong> {{ mission.duration }}</p>
+                <br>
                 <p><strong>En cours:</strong> {{ mission.inProgress ? 'Oui' : 'Non' }}</p>
               </div>
             </v-expand-transition>
@@ -97,7 +105,7 @@ const mergeTechnos = (baseTechnos: { name: string; level: string }[], updatedTec
 
 const updateMission = async (index: number, updatedMission: Mission) => {
     const skills = mergeTechnos(props.hardSkills, updatedMission.technos);
-
+    props.missions.splice(index, 1, updatedMission);
     try {
         const { error } = await supabase.from('profil').update([
             { mission: props.missions, hardSkill: skills },
@@ -112,6 +120,7 @@ const updateMission = async (index: number, updatedMission: Mission) => {
 
 
 const addMission = async (mission: Mission) => {
+  console.log(mission, 'mission')
   props.missions.push(mission);
   try {
     const { error } = await supabase.from('profil').update([

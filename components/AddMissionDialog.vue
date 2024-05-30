@@ -8,7 +8,7 @@
         <v-form @submit.prevent="save">
           <v-text-field v-model="localMission.clientName" label="Nom du Client" required></v-text-field>
           <v-text-field v-model="localMission.sector" label="Secteur" required></v-text-field>
-          
+          <v-text-field v-model="localMission.title" label="Titre de la mission" required></v-text-field>
           <v-text-field
             v-model="localMission.stratDate"
             label="Date de Début (JJ/MM/YYYY)"
@@ -78,25 +78,32 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import { ref, watch, defineEmits } from 'vue';
 import type { HardSkill } from '~/interfaces/hardSkill';
 import type { Mission } from '~/interfaces/mission';
 
+const localMission = ref<Mission>({
+    id: Date.now(),
+    clientName: '',
+    sector: '',
+    stratDate: '',
+    endDate: '',
+    duration: '',
+    inProgress: false,
+    context: '',
+    task: [],
+    technos: []
+  });
 
 
 
-
-const props = defineProps<{ mission: Mission, index: number }>();
 const emit = defineEmits(['save', 'close']);
 
 const dialog = ref(true);
-const localMission = ref<Mission>({ ...props.mission });
 const newTask = ref('');
 const newTech = ref<HardSkill>({ name: '' });
 
-watch(() => props.mission, (newMission) => {
-  localMission.value = { ...newMission };
-});
+
 
 
 watch(localMission.value, async () => {
@@ -105,15 +112,17 @@ watch(localMission.value, async () => {
 
 const close = () => {
   dialog.value = false;
+  localMission.value = null
   emit('close');
 };
 
 const save = () => {
-  emit('save', props.index, localMission.value);
+  emit('save', localMission.value);
   close();
 };
 
 const addTask = () => {
+  console.log(localMission.value, 'localMission.value.task')
   if (newTask.value.trim()) {
     localMission.value.task.push(newTask.value.trim());
     newTask.value = '';

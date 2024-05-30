@@ -1,7 +1,7 @@
 <template>
     <v-card class="profile-softskills">
         <v-toolbar color="transparent">
-        <v-toolbar-title class="text-h6" text="Diplômes"></v-toolbar-title>
+        <v-toolbar-title class="text-h6" text="Diplômes / Certifications"></v-toolbar-title>
         <template v-slot:append>
             <AddItemForm
             title="Ajouter un diplôme"
